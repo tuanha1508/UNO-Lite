@@ -1,21 +1,25 @@
 # UNO-Lite
 
-A simplified UNO card game built in C++ using a **Circularly Linked List** template data structure. The game runs entirely in the terminal.
+A simplified UNO card game built in C++ using a **Circularly Linked List** template data structure. The entire program is contained in a single `main.cpp` file and uses only C++ standard libraries. All interaction is via terminal input/output.
 
 ## Architecture Overview
 
+Everything lives in **one file** (`main.cpp`), organized top-to-bottom in this order:
+
 ```
 ┌─────────────────────────────────────┐
-│            main.cpp                 │  ← Tuan
-│         (Game Engine)               │
+│  Node<T>  /  CircularLinkedList<T>  │  ← Khang
+│         (Template Data Structure)   │
 ├──────────────┬──────────────────────┤
-│  Player      │   Deck              │  ← Tam
-│  Card        │   Hand management   │
+│  Card        │   Player  /  Deck   │  ← Tam
+│  (Game Data) │   (Game Objects)    │
 ├──────────────┴──────────────────────┤
-│  CircularLinkedList<T>              │  ← Khang
-│  Node<T>                           │
+│  Game  /  main()                   │  ← Tuan
+│         (Game Engine + Entry)      │
 └─────────────────────────────────────┘
 ```
+
+**Standard libraries used:** `<iostream>`, `<string>`, `<cstdlib>`, `<ctime>`, `<algorithm>`, `<vector>` (for shuffle only)
 
 ---
 
@@ -23,12 +27,12 @@ A simplified UNO card game built in C++ using a **Circularly Linked List** templ
 
 ### Khang — Core Data Structure (~33.33%)
 
-**Files:** `Node.h`, `CircularLinkedList.h`
+**Section:** Top of `main.cpp` (template classes)
 
-This is the **foundation** everyone else depends on, so it should be started **first**.
+This is the **foundation** everything else depends on, so it should be written **first**.
 
 **`Node<T>`**
-- Template struct/class holding `data` and `next` pointer
+- Template struct holding `data` and `next` pointer
 
 **`CircularLinkedList<T>`** — all templated, reusable for any type
 
@@ -54,7 +58,7 @@ This is the **foundation** everyone else depends on, so it should be started **f
 
 ### Tam — Game Objects (~33.33%)
 
-**Files:** `Card.h`, `Card.cpp`, `Player.h`, `Player.cpp`, `Deck.h`, `Deck.cpp`
+**Section:** Middle of `main.cpp` (Card, Player, Deck classes)
 
 **`Card`**
 - Members: `color` (Red/Blue/Green/Yellow), `value` (0–9), `type` (Number/Skip/Reverse/DrawTwo)
@@ -72,7 +76,7 @@ This is the **foundation** everyone else depends on, so it should be started **f
 
 **`Deck`**
 - Builds a full UNO-lite deck (e.g., 76 number cards + 24 action cards)
-- `shuffle()` — randomize the deck
+- `shuffle()` — randomize the deck using Fisher-Yates with `rand()`
 - `drawFromDeck()` — pop top card
 - `isEmpty()` — check if deck is exhausted
 - Uses `CircularLinkedList<Card>` internally
@@ -81,7 +85,7 @@ This is the **foundation** everyone else depends on, so it should be started **f
 
 ### Tuan — Game Engine (~33.33%)
 
-**Files:** `Game.h`, `Game.cpp`, `main.cpp`
+**Section:** Bottom of `main.cpp` (Game class + `main()`)
 
 **`Game`** — orchestrates everything
 - `CircularLinkedList<Player*> players` — the player turn order (this is the **key** circular list usage)
@@ -96,8 +100,8 @@ This is the **foundation** everyone else depends on, so it should be started **f
 | `gameLoop()` | Main loop: cycle turns until someone wins |
 | `displayGameState()` | Print top card, current player, card counts |
 
-**`main.cpp`**
-- Calls `Game.setupGame()` then `Game.gameLoop()`
+**`main()`**
+- Creates a `Game` instance, calls `setupGame()` then `gameLoop()`
 - All interaction via terminal input/output (`cin`/`cout`)
 
 ---
@@ -117,6 +121,6 @@ This is the **foundation** everyone else depends on, so it should be started **f
 ## Build & Run
 
 ```bash
-g++ -std=c++17 -o uno main.cpp Card.cpp Player.cpp Deck.cpp Game.cpp
+g++ -std=c++17 -o uno main.cpp
 ./uno
 ```
