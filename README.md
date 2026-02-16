@@ -1,13 +1,13 @@
 # UNO-Lite
 
-A simplified UNO card game built in C++ using a **Circularly Linked List** template data structure.
+A simplified UNO card game built in C++ using a **Circularly Linked List** template data structure. The game runs entirely in the terminal.
 
 ## Architecture Overview
 
 ```
 ┌─────────────────────────────────────┐
 │            main.cpp                 │  ← Tuan
-│         (Game Engine + UI)          │
+│         (Game Engine)               │
 ├──────────────┬──────────────────────┤
 │  Player      │   Deck              │  ← Tam
 │  Card        │   Hand management   │
@@ -79,7 +79,7 @@ This is the **foundation** everyone else depends on, so it should be started **f
 
 ---
 
-### Tuan — Game Engine & UI (~35%)
+### Tuan — Game Engine (~35%)
 
 **Files:** `Game.h`, `Game.cpp`, `main.cpp`
 
@@ -89,16 +89,16 @@ This is the **foundation** everyone else depends on, so it should be started **f
 
 | Method | Purpose |
 |---|---|
-| `setupGame()` | Ask for player names, create players, deal 7 cards each |
-| `playTurn()` | Show current player's hand, prompt for card or draw |
+| `setupGame()` | Prompt for player names, create players, deal 7 cards each |
+| `playTurn()` | Print current player's hand, prompt for card index or draw |
 | `applyCardEffect()` | Handle Skip, Reverse, Draw Two |
 | `checkWinner()` | Player with 0 cards wins |
 | `gameLoop()` | Main loop: cycle turns until someone wins |
-| `displayGameState()` | Show top card, current player, card counts |
+| `displayGameState()` | Print top card, current player, card counts |
 
 **`main.cpp`**
-- Welcome menu: Start Game / Rules / Quit
 - Calls `Game.setupGame()` then `Game.gameLoop()`
+- All interaction via terminal input/output (`cin`/`cout`)
 
 ---
 
