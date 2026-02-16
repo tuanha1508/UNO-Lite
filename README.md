@@ -21,7 +21,7 @@ A simplified UNO card game built in C++ using a **Circularly Linked List** templ
 
 ## Task Division
 
-### Khang — Core Data Structure (~35%)
+### Khang — Core Data Structure (~33.33%)
 
 **Files:** `Node.h`, `CircularLinkedList.h`
 
@@ -52,7 +52,7 @@ This is the **foundation** everyone else depends on, so it should be started **f
 
 ---
 
-### Tam — Game Objects (~30%)
+### Tam — Game Objects (~33.33%)
 
 **Files:** `Card.h`, `Card.cpp`, `Player.h`, `Player.cpp`, `Deck.h`, `Deck.cpp`
 
@@ -79,7 +79,7 @@ This is the **foundation** everyone else depends on, so it should be started **f
 
 ---
 
-### Tuan — Game Engine (~35%)
+### Tuan — Game Engine (~33.33%)
 
 **Files:** `Game.h`, `Game.cpp`, `main.cpp`
 
