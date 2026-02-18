@@ -1,0 +1,7 @@
+# Compiled binary
+uno
+
+# Build artifacts
+*.o
+*.out
+*.dSYM/

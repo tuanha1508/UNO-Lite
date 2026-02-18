@@ -46,7 +46,10 @@ private:
 
     void flipFirstCard() {
         currentTopCard = deck.drawFromDeck();
+        // If first card is an action card, put it back and reshuffle
         while (currentTopCard.type != NUMBER) {
+            deck.addCard(currentTopCard);
+            deck.shuffle();
             currentTopCard = deck.drawFromDeck();
         }
         std::cout << "\nFirst card flipped: " << currentTopCard << std::endl;
@@ -89,8 +92,12 @@ private:
     void applyStackedEffects(CardType type, int count) {
         switch (type) {
             case SKIP:
-                std::cout << ">> SKIP x" << count
-                          << "! Next " << count << " player(s) lose their turn." << std::endl;
+                if (count == 1) {
+                    std::cout << ">> SKIP! Next player loses their turn." << std::endl;
+                } else {
+                    std::cout << ">> SKIP x" << count
+                              << "! Next " << count << " players lose their turn." << std::endl;
+                }
                 for (int i = 0; i < count; i++) {
                     players.advance();
                 }
@@ -113,9 +120,14 @@ private:
                 int totalDraw = DRAW_TWO_PENALTY * count;
                 players.advance();
                 Player* victim = players.getCurrent();
-                std::cout << ">> DRAW TWO x" << count << "! " << victim->name
-                          << " draws " << totalDraw
-                          << " cards and loses their turn." << std::endl;
+                if (count == 1) {
+                    std::cout << ">> DRAW TWO! " << victim->name
+                              << " draws 2 cards and loses their turn." << std::endl;
+                } else {
+                    std::cout << ">> DRAW TWO x" << count << "! " << victim->name
+                              << " draws " << totalDraw
+                              << " cards and loses their turn." << std::endl;
+                }
                 for (int i = 0; i < totalDraw; i++) {
                     if (!deck.isEmpty()) {
                         victim->drawCard(deck.drawFromDeck());

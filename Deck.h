@@ -5,6 +5,7 @@
 #include "CircularLinkedList.h"
 #include <algorithm>
 #include <cstdlib>
+#include <iostream>
 #include <vector>
 
 /**
@@ -64,7 +65,15 @@ public:
         }
     }
 
+    void addCard(Card card) {
+        cards.insertBack(card);
+    }
+
     Card drawFromDeck() {
+        if (cards.isEmpty()) {
+            std::cerr << "drawFromDeck: deck is empty" << std::endl;
+            return Card();
+        }
         Card top = cards.get(0);
         cards.removeFront();
         return top;
